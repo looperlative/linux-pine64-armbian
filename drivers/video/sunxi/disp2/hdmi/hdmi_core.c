@@ -26,10 +26,6 @@ static s32 video_config(u32 vic);
 
 uintptr_t hdmi_base_addr;
 EXPORT_SYMBOL(hdmi_base_addr);
-EXPORT_SYMBOL(bsp_hdmi_cec_get_simple_msg);
-EXPORT_SYMBOL(bsp_hdmi_cec_send);
-EXPORT_SYMBOL(bsp_hdmi_cec_free_time_set);
-EXPORT_SYMBOL(bsp_hdmi_cec_sta_check);
 EXPORT_SYMBOL(hdmi_delay_ms);
 
 struct disp_video_timings video_timing[] =
