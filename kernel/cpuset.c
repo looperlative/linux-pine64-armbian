@@ -1926,13 +1926,6 @@ static int cpuset_css_online(struct cgroup *cgrp)
 
 	number_of_cpusets++;
 
-	mutex_lock(&callback_mutex);
-	if (cgroup_on_dfl(cs->css.cgroup)) {
-		cpumask_copy(cs->effective_cpus, parent->effective_cpus);
-		cs->effective_mems = parent->effective_mems;
-	}
-	mutex_unlock(&callback_mutex);
-
 	if (!test_bit(CGRP_CPUSET_CLONE_CHILDREN, &cgrp->flags))
 		goto out_unlock;
 
