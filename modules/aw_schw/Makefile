@@ -11,7 +11,8 @@
 PWD=$(shell pwd)
 obj-m+=sunxi_schw.o
 
-sunxi_schw-objs := sunxi_schw_base.o libschw.a
+sunxi_schw-objs := sunxi_schw_base.o libschw
+#sunxi_schw-objs := sunxi_schw_base.o libschw.a
 #sunxi_schw-objs := sunxi_schw_base.o aw_schw_lib.o
 
 install:build
