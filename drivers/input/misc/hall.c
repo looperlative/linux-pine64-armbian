@@ -53,9 +53,14 @@ static int debug_level = DEBUG_DEBUG;
 #define HALL_OPEN 0
 #define HALL_CLOSE 1
 #define HALL_UNKNOW 2
+
+#ifdef CONFIG_ANDROID_BINDER_IPC
 #define HALL_REPORT_KEY //report key
-//#define HALL_REPORT_SW //report switch
-//#define HALL_STATE_LOCK
+#else                   // CONFIG_ANDROID_BINDER_IPC
+#define HALL_REPORT_SW //report switch
+#endif                 // CONFIG_ANDROID_BINDER_IPC
+
+// #define HALL_STATE_LOCK
 
 struct hall_data {
     int gpio;
