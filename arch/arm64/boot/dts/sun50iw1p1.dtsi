@@ -71,7 +71,10 @@
 					600000
 					720000
 					816000
+					912000
+					960000
 					1008000
+					1056000
 					1104000
 					1152000
 					1200000
@@ -1287,15 +1290,18 @@
 			compatible = "allwinner,budget_cooling";
 			#cooling-cells = <2>;
 			status = "okay";
-			state_cnt = <7>;
+			state_cnt = <10>;
 			cluster_num = <1>;
 			state0 = <1152000 4>;
 			state1 = <1104000 4>;
-			state2 = <1008000 4>;
-			state3 = <816000 4>;
-			state4 = <648000 4>;
-			state5 = <648000 2>;
-			state6 = <648000 1>;
+			state2 = <1056000 4>;
+			state3 = <1008000 4>;
+			state4 = <960000 4>;
+			state5 = <912000 4>;
+			state6 = <816000 4>;
+			state7 = <648000 4>;
+			state8 = <648000 2>;
+			state9 = <648000 1>;
 		};
 
 		gpu_cooling:gpu_cooling{
@@ -1318,12 +1324,12 @@
 
 				trips{
 					cpu_trip0:t0{
-						temperature = <65>;
+						temperature = <80>;
 						type = "passive";
 						hysteresis = <0>;
 					};
 					cpu_trip1:t1{
-						temperature = <80>;
+						temperature = <85>;
 						type = "passive";
 						hysteresis = <0>;
 					};
@@ -1333,7 +1339,7 @@
 						hysteresis = <0>;
 					};
 					cpu_trip3:t3{
-						temperature = <100>;
+						temperature = <95>;
 						type = "passive";
 						hysteresis = <0>;
 					};
@@ -1368,12 +1374,12 @@
 					bind2{
 						contribution = <0>;
 						trip = <&cpu_trip2>;
-						cooling-device = <&cpu_budget_cooling 3 4>;
+						cooling-device = <&cpu_budget_cooling 3 6>;
 					};
 					bind3{
 						contribution = <0>;
 						trip = <&cpu_trip3>;
-						cooling-device = <&cpu_budget_cooling 5 6>;
+						cooling-device = <&cpu_budget_cooling 7 9>;
 					};
 					bind4{
 						contribution = <0>;
