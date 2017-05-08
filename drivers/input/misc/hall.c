@@ -54,10 +54,13 @@ static int debug_level = DEBUG_DEBUG;
 #define HALL_CLOSE 1
 #define HALL_UNKNOW 2
 
-// #define HALL_REPORT_KEY //report key
+#ifdef CONFIG_INPUT_HALL_GPIO_REPORT_KEY
+#define HALL_REPORT_KEY //report key
+#endif
+#ifdef CONFIG_INPUT_HALL_GPIO_REPORT_SW
 #define HALL_REPORT_SW //report switch
-
-// #define HALL_STATE_LOCK
+#endif
+//#define HALL_STATE_LOCK
 
 struct hall_data {
     int gpio;
@@ -427,4 +430,3 @@ module_platform_driver(hall_driver);
 MODULE_AUTHOR("Daniel Peng");
 MODULE_DESCRIPTION("Hall device with one GPIO");
 MODULE_LICENSE("GPL");
-
