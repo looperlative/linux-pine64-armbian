@@ -20,28 +20,28 @@ struct pcm_sf
 	unsigned char	cs_sf;
 };
 
-struct para_tab ptbl[] =
-{
-	{{6			, 1	, 1,  1,		5,	 3, 	0,		1,	 4,		0,		0,	160,	20, 		38, 	124,	240,	22,		0,		0	}},
-	{{21		, 11, 1,  1,		5,	 3, 	1,		1,	 2,		0,		0,	160,	32, 		24, 	126,	32,		24,		0,		0	}},
-	{{2			, 11, 0,  0,		2,	 6, 	1,		0,	 9,		0,		0,	208,	138,		16, 	62, 	224,	45,		0,		0	}},
-	{{17		, 11, 0,  0,		2,	 5, 	2,		0,	 5,		0,		0,	208,	144,		12, 	64, 	64,		49,		0,		0	}},
-	{{19		, 4	, 0,  96,		5,	 5, 	2,		2,	 5,		1,		0,	0,		188,		184,	40, 	208,	30,		1,		1	}},
-	{{4			, 4	, 0,  96,		5,	 5, 	2,		1,	 5,		0,		0,	0,		114,		110,	40, 	208,	30,		1,		1	}},
-	{{20		, 4	, 0,  97,		7, 	 5, 	4,		2,	 2,		2,		0,	128,	208,		16,		44, 	56,		22,		1,		1	}},
-	{{5			, 4	, 0,  97,		7, 	 5, 	4,		1,	 2,		0,		0,	128,	24, 		88, 	44, 	56,		22,		1,		1	}},
-	{{31		, 2	, 0,  96,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
-	{{16		, 2	, 0,  96,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
-	{{32		, 4	, 0,  96,		7, 	 5, 	4,		3,	 4,		2,		0,	128,	62, 		126,	44, 	56,		45,		1,		1	}},
-	{{33		, 4	, 0,  0,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
-	{{34		, 4	, 0,  0,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
-	{{160		, 2	, 0,  96,		7, 	 5, 	8,		3,	 4,		1,		0,	128,	62, 		126,	44, 	157,	45,		1,		1	}},
-	{{147		, 2	, 0,  96,		5,	 5, 	5,		2,	 5,		1,		0,	0,		188,		184,	40, 	190,	30,		1,		1	}},
-	{{132		, 2	, 0,  96,		5,	 5, 	5,		1,	 5,	  0,		0,	0,		114,		110,	40,  	160, 	30,		1,		1	}},
-	{{257		, 1	, 0,  96,		15,	10, 	8,		2,	 8,		0,		0,	0,		48,			176,	88, 	112,	90,		1,		1	}},
-	{{258		, 1	, 0,  96,		15,	10, 	8,		5,	 8,		4,		0,	0,		160,		32,		88, 	112,	90,		1,		1	}},
-	{{35    , 11, 0,   0,    1,  3,   3,    0,  13,   0,    0,  208,  228,    80,   60,   208,  45,   0,    0 }},
-};
+// struct para_tab ptbl[] =
+// {
+// 	{{6			, 1	, 1,  1,		5,	 3, 	0,		1,	 4,		0,		0,	160,	20, 		38, 	124,	240,	22,		0,		0	}},
+// 	{{21		, 11, 1,  1,		5,	 3, 	1,		1,	 2,		0,		0,	160,	32, 		24, 	126,	32,		24,		0,		0	}},
+// 	{{2			, 11, 0,  0,		2,	 6, 	1,		0,	 9,		0,		0,	208,	138,		16, 	62, 	224,	45,		0,		0	}},
+// 	{{17		, 11, 0,  0,		2,	 5, 	2,		0,	 5,		0,		0,	208,	144,		12, 	64, 	64,		49,		0,		0	}},
+// 	{{19		, 4	, 0,  96,		5,	 5, 	2,		2,	 5,		1,		0,	0,		188,		184,	40, 	208,	30,		1,		1	}},
+// 	{{4			, 4	, 0,  96,		5,	 5, 	2,		1,	 5,		0,		0,	0,		114,		110,	40, 	208,	30,		1,		1	}},
+// 	{{20		, 4	, 0,  97,		7, 	 5, 	4,		2,	 2,		2,		0,	128,	208,		16,		44, 	56,		22,		1,		1	}},
+// 	{{5			, 4	, 0,  97,		7, 	 5, 	4,		1,	 2,		0,		0,	128,	24, 		88, 	44, 	56,		22,		1,		1	}},
+// 	{{31		, 2	, 0,  96,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
+// 	{{16		, 2	, 0,  96,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
+// 	{{32		, 4	, 0,  96,		7, 	 5, 	4,		3,	 4,		2,		0,	128,	62, 		126,	44, 	56,		45,		1,		1	}},
+// 	{{33		, 4	, 0,  0,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
+// 	{{34		, 4	, 0,  0,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
+// 	{{160		, 2	, 0,  96,		7, 	 5, 	8,		3,	 4,		1,		0,	128,	62, 		126,	44, 	157,	45,		1,		1	}},
+// 	{{147		, 2	, 0,  96,		5,	 5, 	5,		2,	 5,		1,		0,	0,		188,		184,	40, 	190,	30,		1,		1	}},
+// 	{{132		, 2	, 0,  96,		5,	 5, 	5,		1,	 5,	  0,		0,	0,		114,		110,	40,  	160, 	30,		1,		1	}},
+// 	{{257		, 1	, 0,  96,		15,	10, 	8,		2,	 8,		0,		0,	0,		48,			176,	88, 	112,	90,		1,		1	}},
+// 	{{258		, 1	, 0,  96,		15,	10, 	8,		5,	 8,		4,		0,	0,		160,		32,		88, 	112,	90,		1,		1	}},
+// 	{{35    , 11, 0,   0,    1,  3,   3,    0,  13,   0,    0,  208,  228,    80,   60,   208,  45,   0,    0 }},
+// };
 
 static unsigned char ca_table[64]=
 {
@@ -175,25 +175,25 @@ void hdmi_phy_init(struct video_para *video)
 	hdmi_writel(0x10028,0x0F81C405);
 }
 
-static unsigned int get_vid(unsigned int id)
-{
-	unsigned int i,count;
-	count = sizeof(ptbl)/sizeof(struct para_tab);
-	for(i=0;i<count;i++) {
-		if(id == ptbl[i].para[0])
-			return i;
-	}
-	return -1;
-}
+// static unsigned int get_vid(unsigned int id)
+// {
+// 	unsigned int i,count;
+// 	count = sizeof(ptbl)/sizeof(struct para_tab);
+// 	for(i=0;i<count;i++) {
+// 		if(id == ptbl[i].para[0])
+// 			return i;
+// 	}
+// 	return -1;
+// }
 
 int hdmi_phy_set(struct video_para *video)
 {
-	unsigned int id;
+	// unsigned int id;
 	unsigned int tmp;
 
-	id = get_vid(video->vic);
+  // id = get_vid(video->vic);
 	hdmi_writel(0x10020,hdmi_readl(0x10020)&(~0xf000));
-	switch(ptbl[id].para[1])
+	switch(video->para[1])
 	{
 		case 1:
 			if(hdmi_version == 0)
@@ -330,7 +330,7 @@ void bsp_hdmi_set_video_en(unsigned char enable)
 
 int bsp_hdmi_video(struct video_para *video)
 {
-	unsigned int id = get_vid(video->vic);
+	// unsigned int id = get_vid(video->vic);
 	glb_video.vic = video->vic;
 
 	switch(glb_video.vic)
@@ -354,29 +354,29 @@ int bsp_hdmi_video(struct video_para *video)
 
 	hdmi_write(0x0840, 0x01);
 	hdmi_write(0x4845, 0x00);
-	hdmi_write(0x0040, ptbl[id].para[3] |	0x10);
-	hdmi_write(0x10001, ( (ptbl[id].para[3] < 96) ? 0x03 : 0x00 ) );
-	hdmi_write(0x8040, ptbl[id].para[4]);
-	hdmi_write(0x4043, ptbl[id].para[5]);
-	hdmi_write(0x8042, ptbl[id].para[6]);
-	hdmi_write(0x0042, ptbl[id].para[7]);
-	hdmi_write(0x4042, ptbl[id].para[8]);
-	hdmi_write(0x4041, ptbl[id].para[9]);
-	hdmi_write(0xC041, ptbl[id].para[10]);
-	hdmi_write(0x0041, ptbl[id].para[11]);
-	hdmi_write(0x8041, ptbl[id].para[12]);
-	hdmi_write(0x4040, ptbl[id].para[13]);
-	hdmi_write(0xC040, ptbl[id].para[14]);
-	hdmi_write(0x0043, ptbl[id].para[15]);
-	hdmi_write(0x8043, ptbl[id].para[16]);
+	hdmi_write(0x0040, video->para[3] |	0x10);
+	hdmi_write(0x10001, ( (video->para[3] < 96) ? 0x03 : 0x00 ) );
+	hdmi_write(0x8040, video->para[4]);
+	hdmi_write(0x4043, video->para[5]);
+	hdmi_write(0x8042, video->para[6]);
+	hdmi_write(0x0042, video->para[7]);
+	hdmi_write(0x4042, video->para[8]);
+	hdmi_write(0x4041, video->para[9]);
+	hdmi_write(0xC041, video->para[10]);
+	hdmi_write(0x0041, video->para[11]);
+	hdmi_write(0x8041, video->para[12]);
+	hdmi_write(0x4040, video->para[13]);
+	hdmi_write(0xC040, video->para[14]);
+	hdmi_write(0x0043, video->para[15]);
+	hdmi_write(0x8043, video->para[16]);
 	hdmi_write(0x0045, 0x0c);
 	hdmi_write(0x8044, 0x20);
 	hdmi_write(0x8045, 0x01);
 	hdmi_write(0x0046, 0x0b);
 	hdmi_write(0x0047, 0x16);
 	hdmi_write(0x8046, 0x21);
-	hdmi_write(0x3048, ptbl[id].para[2] ? 0x21 : 0x10);
-	hdmi_write(0x0401, ptbl[id].para[2] ? 0x41 : 0x40);
+	hdmi_write(0x3048, video->para[2] ? 0x21 : 0x10);
+	hdmi_write(0x0401, video->para[2] ? 0x41 : 0x40);
 	hdmi_write(0x8400, 0x07);
 	hdmi_write(0x8401, 0x00);
 	hdmi_write(0x0402, 0x47);
@@ -395,8 +395,8 @@ int bsp_hdmi_video(struct video_para *video)
 		hdmi_write(0x2045, 0x00);
 		hdmi_write(0x2044, 0x0c);
 		hdmi_write(0x6041, 0x03);
-		hdmi_write(0xA044, ((ptbl[id].para[0]&0x100) == 0x100) ? 0x20 : ( ((ptbl[id].para[0]&0x80) == 0x80) ? 0x40 : 0x00) );
-		hdmi_write(0xA045, ((ptbl[id].para[0]&0x100) == 0x100) ? (ptbl[id].para[0]&0x7f) : 0x00);
+		hdmi_write(0xA044, ((video->para[0]&0x100) == 0x100) ? 0x20 : ( ((video->para[0]&0x80) == 0x80) ? 0x40 : 0x00) );
+		hdmi_write(0xA045, ((video->para[0]&0x100) == 0x100) ? (video->para[0]&0x7f) : 0x00);
 		hdmi_write(0x2046, 0x00);
 		hdmi_write(0x3046, 0x01);
 		hdmi_write(0x3047, 0x11);
@@ -413,22 +413,22 @@ int bsp_hdmi_video(struct video_para *video)
 		hdmi_write(0x10012,0x41);
 		hdmi_write(0x10013,0x57);
 		hdmi_write(0x4045, video->is_yuv ? 0x02 : 0x00);
-		if(ptbl[id].para[17] == 0)
+		if(video->para[17] == 0)
 			hdmi_write(0xC044, (video->csc << 6) | 0x18);
-		else if(ptbl[id].para[17] == 1)
+		else if(video->para[17] == 1)
 			hdmi_write(0xC044, (video->csc << 6) | 0x28);
 		else
 			hdmi_write(0xC044, (video->csc << 6) | 0x08);
 
 		hdmi_write(0xC045, video->is_yuv ? 0x00 : 0x08);
-		hdmi_write(0x4046, ptbl[id].para[0]&0x7f);
+		hdmi_write(0x4046, video->para[0]&0x7f);
 	}
 
 	if(video->is_hcts)
 	{
 		hdmi_write(0x00C0, video->is_hdmi ? 0x91 : 0x90 );
 		hdmi_write(0x00C1, 0x05);
-		hdmi_write(0x40C1, (ptbl[id].para[3] < 96) ? 0x10 : 0x1a);
+		hdmi_write(0x40C1, (video->para[3] < 96) ? 0x10 : 0x1a);
 		hdmi_write(0x80C2, 0xff);
 		hdmi_write(0x40C0, 0xfd);
 		hdmi_write(0xC0C0, 0x40);
@@ -462,7 +462,7 @@ int bsp_hdmi_audio(struct audio_para *audio)
 {
 	unsigned int i;
 	unsigned int n;
-	unsigned id = get_vid(glb_video.vic);
+	// unsigned id = get_vid(glb_video.vic);
 
 	hdmi_write(0xA049, (audio->ch_num > 2) ? 0xf1 : 0xf0);
 
@@ -505,7 +505,7 @@ int bsp_hdmi_audio(struct audio_para *audio)
 	{
 		if(audio->sample_rate == n_table[i])
 		{
-			if(ptbl[id].para[1] == 1)
+			if(audio->para[1] == 1)
 				n = n_table[i+1];
 			else
 				n = n_table[i+2];
