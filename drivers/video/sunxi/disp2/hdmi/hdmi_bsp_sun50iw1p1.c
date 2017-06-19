@@ -5,7 +5,6 @@
 static unsigned long long hdmi_base_addr_v2;
 static struct video_para glb_video;
 static unsigned int hdmi_version;
-//static struct audio_para glb_audio;
 
 static int hdmi_phy_set(struct video_para *video);
 
@@ -19,29 +18,6 @@ struct pcm_sf
 	unsigned int 	sf;
 	unsigned char	cs_sf;
 };
-
-// struct para_tab ptbl[] =
-// {
-// 	{{6			, 1	, 1,  1,		5,	 3, 	0,		1,	 4,		0,		0,	160,	20, 		38, 	124,	240,	22,		0,		0	}},
-// 	{{21		, 11, 1,  1,		5,	 3, 	1,		1,	 2,		0,		0,	160,	32, 		24, 	126,	32,		24,		0,		0	}},
-// 	{{2			, 11, 0,  0,		2,	 6, 	1,		0,	 9,		0,		0,	208,	138,		16, 	62, 	224,	45,		0,		0	}},
-// 	{{17		, 11, 0,  0,		2,	 5, 	2,		0,	 5,		0,		0,	208,	144,		12, 	64, 	64,		49,		0,		0	}},
-// 	{{19		, 4	, 0,  96,		5,	 5, 	2,		2,	 5,		1,		0,	0,		188,		184,	40, 	208,	30,		1,		1	}},
-// 	{{4			, 4	, 0,  96,		5,	 5, 	2,		1,	 5,		0,		0,	0,		114,		110,	40, 	208,	30,		1,		1	}},
-// 	{{20		, 4	, 0,  97,		7, 	 5, 	4,		2,	 2,		2,		0,	128,	208,		16,		44, 	56,		22,		1,		1	}},
-// 	{{5			, 4	, 0,  97,		7, 	 5, 	4,		1,	 2,		0,		0,	128,	24, 		88, 	44, 	56,		22,		1,		1	}},
-// 	{{31		, 2	, 0,  96,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
-// 	{{16		, 2	, 0,  96,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
-// 	{{32		, 4	, 0,  96,		7, 	 5, 	4,		3,	 4,		2,		0,	128,	62, 		126,	44, 	56,		45,		1,		1	}},
-// 	{{33		, 4	, 0,  0,		7, 	 5, 	4,		2,	 4,		2,		0,	128,	208,		16,		44, 	56, 	45,		1,		1	}},
-// 	{{34		, 4	, 0,  0,		7, 	 5, 	4,		1,	 4,		0,		0,	128,	24, 		88, 	44, 	56,		45,		1,		1	}},
-// 	{{160		, 2	, 0,  96,		7, 	 5, 	8,		3,	 4,		1,		0,	128,	62, 		126,	44, 	157,	45,		1,		1	}},
-// 	{{147		, 2	, 0,  96,		5,	 5, 	5,		2,	 5,		1,		0,	0,		188,		184,	40, 	190,	30,		1,		1	}},
-// 	{{132		, 2	, 0,  96,		5,	 5, 	5,		1,	 5,	  0,		0,	0,		114,		110,	40,  	160, 	30,		1,		1	}},
-// 	{{257		, 1	, 0,  96,		15,	10, 	8,		2,	 8,		0,		0,	0,		48,			176,	88, 	112,	90,		1,		1	}},
-// 	{{258		, 1	, 0,  96,		15,	10, 	8,		5,	 8,		4,		0,	0,		160,		32,		88, 	112,	90,		1,		1	}},
-// 	{{35    , 11, 0,   0,    1,  3,   3,    0,  13,   0,    0,  208,  228,    80,   60,   208,  45,   0,    0 }},
-// };
 
 static unsigned char ca_table[64]=
 {
@@ -102,7 +78,7 @@ static unsigned int hdmi_readl(unsigned int addr)
 {
 	return
     get_bvalue(hdmi_base_addr_v2 + addr + 0) +
-		get_bvalue(hdmi_base_addr_v2 + addr + 1) * 256 + 
+		get_bvalue(hdmi_base_addr_v2 + addr + 1) * 256 +
 		get_bvalue(hdmi_base_addr_v2 + addr + 2) * 256 * 256 +
 		get_bvalue(hdmi_base_addr_v2 + addr + 3) * 256 * 256 * 256;
 }
@@ -119,8 +95,6 @@ void hdmi_delay_us(unsigned long us);
 
 void hdmi_udelay(unsigned long us)
 {
-	//if (hdmi_bsp_funcs->delay_us)
-	//	hdmi_bsp_funcs->delay_us(delay);
 	hdmi_delay_us(us);
 }
 
@@ -175,23 +149,10 @@ void hdmi_phy_init(struct video_para *video)
 	hdmi_writel(0x10028,0x0F81C405);
 }
 
-// static unsigned int get_vid(unsigned int id)
-// {
-// 	unsigned int i,count;
-// 	count = sizeof(ptbl)/sizeof(struct para_tab);
-// 	for(i=0;i<count;i++) {
-// 		if(id == ptbl[i].para[0])
-// 			return i;
-// 	}
-// 	return -1;
-// }
-
 int hdmi_phy_set(struct video_para *video)
 {
-	// unsigned int id;
 	unsigned int tmp;
 
-  // id = get_vid(video->vic);
 	hdmi_writel(0x10020,hdmi_readl(0x10020)&(~0xf000));
 	switch(video->para[1])
 	{
@@ -330,7 +291,6 @@ void bsp_hdmi_set_video_en(unsigned char enable)
 
 int bsp_hdmi_video(struct video_para *video)
 {
-	// unsigned int id = get_vid(video->vic);
 	glb_video.vic = video->vic;
 
 	switch(glb_video.vic)
@@ -462,7 +422,6 @@ int bsp_hdmi_audio(struct audio_para *audio)
 {
 	unsigned int i;
 	unsigned int n;
-	// unsigned id = get_vid(glb_video.vic);
 
 	hdmi_write(0xA049, (audio->ch_num > 2) ? 0xf1 : 0xf0);
 
@@ -559,7 +518,7 @@ int bsp_hdmi_ddc_read(char cmd,char pointer,char offset,int nbyte,char * pbuf)
 	unsigned char off = offset;
 	unsigned int to_cnt;
 	int ret = 0;
-	
+
 	hdmi_write(0x10010,0x45);
 	hdmi_write(0x10011,0x45);
 	hdmi_write(0x10012,0x52);
@@ -581,7 +540,7 @@ int bsp_hdmi_ddc_read(char cmd,char pointer,char offset,int nbyte,char * pbuf)
 	hdmi_write(0x0EE3, 0x08);
 	hdmi_write(0x4EE2, 0xd8);
 	hdmi_write(0xCEE2, 0xfe);
-	
+
 	to_cnt = 10;
 	while(nbyte > 0)
 	{
