@@ -12,6 +12,7 @@
 
 #define __iomem
 #endif
+
 typedef struct
 {
 	void (*delay_us) (unsigned long us);
