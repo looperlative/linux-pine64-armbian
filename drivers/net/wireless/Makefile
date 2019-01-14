@@ -20,6 +20,7 @@ obj-$(CONFIG_PRISM54)		+= prism54/
 
 obj-$(CONFIG_HOSTAP)		+= hostap/
 obj-$(CONFIG_B43)		+= b43/
+obj-$(CONFIG_RTL8188EU) += rtl8188eu/
 obj-$(CONFIG_B43LEGACY)		+= b43legacy/
 obj-$(CONFIG_ZD1211RW)		+= zd1211rw/
 obj-$(CONFIG_RTL8180)		+= rtl818x/
@@ -48,6 +49,8 @@ obj-$(CONFIG_MWL8K)	+= mwl8k.o
 obj-$(CONFIG_IWLWIFI)	+= iwlwifi/
 obj-$(CONFIG_IWLEGACY)	+= iwlegacy/
 obj-$(CONFIG_RT2X00)	+= rt2x00/
+
+obj-$(CONFIG_RTL8812AU) += rtl8812au/
 
 obj-$(CONFIG_P54_COMMON)	+= p54/
 
