@@ -1,4 +1,4 @@
-/dts-v1/;
+ /dts-v1/;
 
 /memreserve/	0x0000000045000000 0x0000000000200000;
 /memreserve/	0x0000000041010000 0x0000000000010000;
@@ -21,6 +21,11 @@
 			label = "system_status";
 			gpios = <0x79 0xb 7 0x1 0xffffffff 0xffffffff 0x0>; /* PL7 */
 			linux,default-trigger = "heartbeat";
+		};
+		rst4270 {
+			label = "rst4270";
+			gpios = <0x30 2 11 1 0xffffffff 0xffffffff 0x0>;
+			default-state = "off";
 		};
 	};
 
@@ -965,6 +970,16 @@
 			linux,phandle = <0x30>;
 			phandle = <0x30>;
 
+			rst4270: rst4270@0 {
+				allwinner,pins = "PC11";
+				allwinner,function = "gpio_out";
+				allwinner,pname = "rst4270";
+				allwinner,muxsel = <0x1>;
+				allwinner,pull = <0x0>;
+				allwinner,drive = <0x0>;
+				allwinner,data = <0xffffffff>;
+			};
+
 			uart0@1 {
 				allwinner,pins = "PB8", "PB9";
 				allwinner,function = "io_disabled";
@@ -1797,6 +1812,16 @@
 			pinctrl-1 = <0x2c>;
 			status = "okay";
 			pinctrl-0 = <0xa0>;
+
+			codec0: i2s-codec@0x48 {
+				compatible = "cirrus,cs4270";
+				reg = <0x48>;
+				va-supply = <&va_reg>;
+				vd-supply = <&vd_reg>;
+				vlc-supply = <&vlc_reg>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&rst4270>;
+			};
 		};
 
 		twi@0x01c2b400 {
@@ -2028,6 +2053,7 @@
 			sunxi,daudio0-controller = <0x4e>;
 			status = "okay";
 			device_type = "snddaudio0";
+			codev-handle = <&codec0>;
 		};
 
 		sound@2 {
@@ -2610,6 +2636,30 @@
 			regulator21 = "axp81x_gpio0ldo none vcc-ctp";
 			regulator22 = "axp81x_gpio1ldo none";
 			regulator23 = "axp81x_dc1sw none vcc-lvds vcc-dsi-33";
+		};
+
+		va_reg: fixedregulator@0 {
+			compatible = "regulator-fixed";
+			regulator-name = "va";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			regulator-always-on;
+		};
+
+		vd_reg: fixedregulator@1 {
+			compatible = "regulator-fixed";
+			regulator-name = "vd";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-always-on;
+		};
+
+		vlc_reg: fixedregulator@2 {
+			compatible = "regulator-fixed";
+			regulator-name = "vlc";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-always-on;
 		};
 
 		nand0@01c03000 {
