@@ -52,9 +52,12 @@ static int sunxi_snddaudio0_hw_params(struct snd_pcm_substream *substream,
 			break;
 	}
 
+	pr_info("[daudio0]sample rate %ld\n", sample_rate);
+
 	/*set system clock source freq and set the mode as daudio or pcm*/
 	ret = snd_soc_dai_set_sysclk(cpu_dai, 0 , freq, 0);
 	if (ret < 0) {
+	    	pr_warn("[daudio0]set sysclk failed %d\n", ret);
 		return ret;
 	}
 
@@ -72,13 +75,21 @@ static int sunxi_snddaudio0_hw_params(struct snd_pcm_substream *substream,
 	/*
 	* codec clk & FRM master. AP as slave
 	*/
+
+	pr_info("[daudio0]cpu_dai: fmt %x, inversion %x, master %x\n",
+		sunxi_daudio->audio_format,
+		(sunxi_daudio->signal_inversion <<8),
+		(sunxi_daudio->daudio_master <<12));
+
 	ret = snd_soc_dai_set_fmt(cpu_dai, (sunxi_daudio->audio_format| (sunxi_daudio->signal_inversion <<8) | (sunxi_daudio->daudio_master <<12)));
 	if (ret < 0) {
+	    	pr_warn("[daudio0]set fmt cpu_dai failed %d\n", ret);
 		return ret;
 	}
 
 	ret = snd_soc_dai_set_clkdiv(cpu_dai, 0, sample_rate);
 	if (ret < 0) {
+	    	pr_warn("[daudio0]set cpu_dai clkdiv failed %d\n", ret);
 		return ret;
 	}
 	ret = snd_soc_dai_set_clkdiv(codec_dai, 0, sample_rate);
@@ -122,6 +133,9 @@ static int  sunxi_snddaudio0_dev_probe(struct platform_device *pdev)
 	int ret = 0;
 	struct device_node *np = pdev->dev.of_node;
 	struct snd_soc_card *card = &snd_soc_sunxi_snddaudio;
+
+	pr_info("[daudio0]probe start\n");
+
 	card->dev = &pdev->dev;
 	sunxi_snddaudio_dai_link.cpu_dai_name = NULL;
 	sunxi_snddaudio_dai_link.cpu_of_node = of_parse_phandle(np,
@@ -144,6 +158,8 @@ static int  sunxi_snddaudio0_dev_probe(struct platform_device *pdev)
 	if (ret) {
 		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n", ret);
 	}
+
+	pr_info("[daudio0]probe %d\n", ret);
 
 	return ret;
 }
@@ -189,4 +205,3 @@ module_exit(sunxi_snddaudio0_exit);
 MODULE_AUTHOR("huangxin");
 MODULE_DESCRIPTION("SUNXI_snddaudio ALSA SoC audio driver");
 MODULE_LICENSE("GPL");
-

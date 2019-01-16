@@ -1737,7 +1737,7 @@
 			pinctrl-1 = <0x20>;
 			uart2_port = <0x2>;
 			uart2_type = <0x4>;
-			status = "okay";
+			status = "disabled";
 			pinctrl-0 = <0xa4>;
 		};
 
@@ -1956,7 +1956,7 @@
 			frametype = <0x0>;
 			tdm_config = <0x1>;
 			tdm_num = <0x0>;
-			status = "disabled";
+			status = "okay";
 			linux,phandle = <0x4e>;
 			phandle = <0x4e>;
 			device_type = "daudio0";
@@ -1981,7 +1981,7 @@
 			frametype = <0x0>;
 			tdm_config = <0x1>;
 			tdm_num = <0x1>;
-			status = "disabled";
+			status = "okay";
 			linux,phandle = <0x4f>;
 			phandle = <0x4f>;
 			device_type = "daudio1";
@@ -2026,14 +2026,14 @@
 		sound@1 {
 			compatible = "allwinner,sunxi-daudio0-machine";
 			sunxi,daudio0-controller = <0x4e>;
-			status = "disabled";
+			status = "okay";
 			device_type = "snddaudio0";
 		};
 
 		sound@2 {
 			compatible = "allwinner,sunxi-daudio1-machine";
 			sunxi,daudio1-controller = <0x4f>;
-			status = "disabled";
+			status = "okay";
 			device_type = "snddaudio1";
 		};
 
