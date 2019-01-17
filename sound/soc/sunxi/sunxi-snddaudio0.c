@@ -136,7 +136,7 @@ static int  sunxi_snddaudio0_dev_probe(struct platform_device *pdev)
 	struct device_node *np = pdev->dev.of_node;
 	struct snd_soc_card *card = &snd_soc_sunxi_snddaudio;
 
-	pr_info("[daudio0]probe start\n");
+	dev_info(&pdev->dev, "probe start\n");
 
 	card->dev = &pdev->dev;
 	sunxi_snddaudio_dai_link.cpu_dai_name = NULL;
@@ -165,10 +165,10 @@ static int  sunxi_snddaudio0_dev_probe(struct platform_device *pdev)
 			sunxi_snddaudio_dai_link.codec_name 	= pdev->name;
 	}
 	if (sunxi_snddaudio_dai_link.codec_name) {
-	    pr_info("[daudio0]codec name %s\n", sunxi_snddaudio_dai_link.codec_name);
+	    dev_info(&pdev->dev, "codec name %s\n", sunxi_snddaudio_dai_link.codec_name);
 	}
 	if (sunxi_snddaudio_dai_link.codec_dai_name) {
-	    pr_info("[daudio0]codec dai name %s\n", sunxi_snddaudio_dai_link.codec_dai_name);
+	    dev_info(&pdev->dev, "codec dai name %s\n", sunxi_snddaudio_dai_link.codec_dai_name);
 	}
 
 	ret = snd_soc_register_card(card);
@@ -176,7 +176,7 @@ static int  sunxi_snddaudio0_dev_probe(struct platform_device *pdev)
 		dev_err(&pdev->dev, "snd_soc_register_card() failed: %d\n", ret);
 	}
 
-	pr_info("[daudio0]probe %d\n", ret);
+	dev_info(&pdev->dev, "probe %d\n", ret);
 
 	return ret;
 }
