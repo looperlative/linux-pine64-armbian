@@ -21,7 +21,6 @@
  *   o Add more codecs and platforms to ensure good API coverage.
  *   o Support TDM on PCM and I2S
  */
-
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 #include <linux/init.h>
@@ -4130,7 +4129,7 @@ int snd_soc_register_codec(struct device *dev,
 		goto fail_codec_name;
 	}
 
-	dev_dbg(codec->dev, "ASoC: Registered codec '%s'\n", codec->name);
+	dev_info(codec->dev, "ASoC: Registered codec '%s'\n", codec->name);
 	return 0;
 
 fail_codec_name:

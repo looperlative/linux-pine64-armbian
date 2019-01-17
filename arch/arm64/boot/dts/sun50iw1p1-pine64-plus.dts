@@ -13,6 +13,12 @@
 	#address-cells = <0x2>;
 	#size-cells = <0x2>;
 
+	gpio1: gpio1 {
+		gpio-controller;
+		#size-cells = <0x0>;
+		#gpio-cells = <0x2>;
+	};
+
 	leds {
 		compatible = "gpio-leds";
 		pinctrl-names = "default";
@@ -22,6 +28,7 @@
 			gpios = <0x79 0xb 7 0x1 0xffffffff 0xffffffff 0x0>; /* PL7 */
 			linux,default-trigger = "heartbeat";
 		};
+
 		rst4270 {
 			label = "rst4270";
 			gpios = <0x30 2 11 1 0xffffffff 0xffffffff 0x0>;
@@ -970,16 +977,6 @@
 			linux,phandle = <0x30>;
 			phandle = <0x30>;
 
-			rst4270: rst4270@0 {
-				allwinner,pins = "PC11";
-				allwinner,function = "gpio_out";
-				allwinner,pname = "rst4270";
-				allwinner,muxsel = <0x1>;
-				allwinner,pull = <0x0>;
-				allwinner,drive = <0x0>;
-				allwinner,data = <0xffffffff>;
-			};
-
 			uart0@1 {
 				allwinner,pins = "PB8", "PB9";
 				allwinner,function = "io_disabled";
@@ -1813,14 +1810,13 @@
 			status = "okay";
 			pinctrl-0 = <0xa0>;
 
-			codec0: i2s-codec@0x48 {
+			codec0: codec0@0x48 {
 				compatible = "cirrus,cs4270";
 				reg = <0x48>;
 				va-supply = <&va_reg>;
 				vd-supply = <&vd_reg>;
 				vlc-supply = <&vlc_reg>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&rst4270>;
+				device_type = "codec";
 			};
 		};
 
@@ -1975,7 +1971,7 @@
 			pcm_lsb_first = <0x0>;
 			tx_data_mode = <0x0>;
 			rx_data_mode = <0x0>;
-			daudio_master = <0x4>;
+			daudio_master = <0x1>;
 			audio_format = <0x1>;
 			signal_inversion = <0x1>;
 			frametype = <0x0>;
@@ -2051,9 +2047,10 @@
 		sound@1 {
 			compatible = "allwinner,sunxi-daudio0-machine";
 			sunxi,daudio0-controller = <0x4e>;
+			sunxi,audio-codec = <&codec0>;
+			sunxi,audio-dai-name = "cs4270-hifi";
 			status = "okay";
 			device_type = "snddaudio0";
-			codev-handle = <&codec0>;
 		};
 
 		sound@2 {

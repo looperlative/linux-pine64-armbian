@@ -398,19 +398,27 @@ static int __init sunxi_daudio_platform_probe(struct platform_device *pdev)
 	} else {
 		sunxi_daudio->tdm_config = temp_val;
 	}
-	pr_debug("[daudio]pcm_lrck_period:%d,pcm_lrckr_period:%d,slot_width_select:%d,pcm_lsb_first:%d,\
-			tx_data_mode:%d,rx_data_mode:%d,daudio_master:%d,audio_format:%d,signal_inversion:%d,\
-			frametype:%d,tdm_config:%d\n",sunxi_daudio->pcm_lrck_period,
-						sunxi_daudio->pcm_lrckr_period,
-						sunxi_daudio->slot_width_select,
-						sunxi_daudio->pcm_lsb_first,
-						sunxi_daudio->tx_data_mode,
-						sunxi_daudio->rx_data_mode,
-						sunxi_daudio->daudio_master,
-						sunxi_daudio->audio_format,
-						sunxi_daudio->signal_inversion,
-						sunxi_daudio->frametype,
-						sunxi_daudio->tdm_config);
+	pr_debug("[daudio]pcm_lrck_period:%d\n"
+		 "        pcm_lrckr_period:%d\n"
+		 "        slot_width_select:%d\n"
+		 "        pcm_lsb_first:%d\n"
+		 "        tx_data_mode:%d\n"
+		 "        rx_data_mode:%d\n"
+		 "        daudio_master:%d\n"
+		 "        audio_format:%d\n"
+		 "        signal_inversion:%d\n"
+		 "        frametype:%d,tdm_config:%d\n",
+		 sunxi_daudio->pcm_lrck_period,
+		 sunxi_daudio->pcm_lrckr_period,
+		 sunxi_daudio->slot_width_select,
+		 sunxi_daudio->pcm_lsb_first,
+		 sunxi_daudio->tx_data_mode,
+		 sunxi_daudio->rx_data_mode,
+		 sunxi_daudio->daudio_master,
+		 sunxi_daudio->audio_format,
+		 sunxi_daudio->signal_inversion,
+		 sunxi_daudio->frametype,
+		 sunxi_daudio->tdm_config);
 	ret = snd_soc_register_component(&pdev->dev, &sunxi_daudio_component,
 				   &sunxi_daudio->dai, 1);
 	if (ret) {
@@ -458,6 +466,3 @@ MODULE_AUTHOR("huangxin,liushaohua");
 MODULE_DESCRIPTION("sunxi DAUDIO SoC Interface");
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:" DRV_NAME);
-
-
-
