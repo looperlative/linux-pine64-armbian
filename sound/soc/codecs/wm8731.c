@@ -49,6 +49,7 @@ struct wm8731_priv {
 	int sysclk_type;
 	int playback_fs;
 	bool deemph;
+	bool isclkmaster;
 };
 
 
@@ -67,6 +68,9 @@ static const struct reg_default wm8731_reg_defaults[] = {
 	{ 8, 0x0000 },
 	{ 9, 0x0000 },
 };
+
+static int wm8731_set_bias_level(struct snd_soc_codec *codec,
+				 enum snd_soc_bias_level level);
 
 static bool wm8731_volatile(struct device *dev, unsigned int reg)
 {
@@ -346,6 +350,35 @@ static int wm8731_mute(struct snd_soc_dai *dai, int mute)
 	return 0;
 }
 
+static int wm8731_set_dai_clkdiv(struct snd_soc_dai *codec_dai,
+				 int div_id, int sample_rate)
+{
+	struct snd_soc_codec *codec = codec_dai->codec;
+	struct wm8731_priv *wm8731 = snd_soc_codec_get_drvdata(codec);
+
+	/* No configuration if we are the clock slave. */
+	if (!wm8731->isclkmaster)
+	    	return 0;
+
+	/* Only adding support for clocks out with 12.288MHz OSC */
+	if (wm8731->sysclk != 12288000)
+		return -EINVAL;
+
+	switch (sample_rate)
+	{
+	  case 48000:
+	    snd_soc_write(codec, WM8731_SRATE, 0x00);
+	    break;
+	  case 96000:
+	    snd_soc_write(codec, WM8731_SRATE, 0x1c);
+	    break;
+	  default:
+	    return -EINVAL;
+	}
+
+	return 0;
+}
+
 static int wm8731_set_dai_sysclk(struct snd_soc_dai *codec_dai,
 		int clk_id, unsigned int freq, int dir)
 {
@@ -356,8 +389,14 @@ static int wm8731_set_dai_sysclk(struct snd_soc_dai *codec_dai,
 	case WM8731_SYSCLK_XTAL:
 	case WM8731_SYSCLK_MCLK:
 		wm8731->sysclk_type = clk_id;
+		pr_info("wm8731 clock type %s\n", clk_id == WM8731_SYSCLK_XTAL ? "XTAL" : "MCLK");
+		break;
+	case 0:
+		wm8731->sysclk_type = WM8731_SYSCLK_XTAL;
+		pr_info("wm8731 clock type XTAL\n");
 		break;
 	default:
+		pr_info("wm8731 clock type invalid %d\n", clk_id);
 		return -EINVAL;
 	}
 
@@ -368,8 +407,10 @@ static int wm8731_set_dai_sysclk(struct snd_soc_dai *codec_dai,
 	case 16934400:
 	case 18432000:
 		wm8731->sysclk = freq;
+		pr_info("wm8731 freq %d\n", freq);
 		break;
 	default:
+		pr_info("wm8731 freq invalid %d\n", freq);
 		return -EINVAL;
 	}
 
@@ -383,14 +424,19 @@ static int wm8731_set_dai_fmt(struct snd_soc_dai *codec_dai,
 		unsigned int fmt)
 {
 	struct snd_soc_codec *codec = codec_dai->codec;
+	struct wm8731_priv *wm8731 = snd_soc_codec_get_drvdata(codec);
 	u16 iface = 0;
 
 	/* set master/slave audio interface */
 	switch (fmt & SND_SOC_DAIFMT_MASTER_MASK) {
 	case SND_SOC_DAIFMT_CBM_CFM:
 		iface |= 0x0040;
+		wm8731->isclkmaster = 1;
+		pr_info("wm8731 is clock master");
 		break;
 	case SND_SOC_DAIFMT_CBS_CFS:
+		wm8731->isclkmaster = 0;
+		pr_info("wm8731 is not clock master");
 		break;
 	default:
 		return -EINVAL;
@@ -435,6 +481,9 @@ static int wm8731_set_dai_fmt(struct snd_soc_dai *codec_dai,
 
 	/* set iface */
 	snd_soc_write(codec, WM8731_IFACE, iface);
+
+	/* recompute power */
+	wm8731_set_bias_level(codec, codec->dapm.bias_level);
 	return 0;
 }
 
@@ -447,10 +496,13 @@ static int wm8731_set_bias_level(struct snd_soc_codec *codec,
 
 	switch (level) {
 	case SND_SOC_BIAS_ON:
+		pr_info("wm8731 bias on\n");
 		break;
 	case SND_SOC_BIAS_PREPARE:
+		pr_info("wm8731 bias prepare\n");
 		break;
 	case SND_SOC_BIAS_STANDBY:
+		pr_info("wm8731 bias standby\n");
 		if (codec->dapm.bias_level == SND_SOC_BIAS_OFF) {
 			ret = regulator_bulk_enable(ARRAY_SIZE(wm8731->supplies),
 						    wm8731->supplies);
@@ -460,11 +512,12 @@ static int wm8731_set_bias_level(struct snd_soc_codec *codec,
 			regcache_sync(wm8731->regmap);
 		}
 
-		/* Clear PWROFF, gate CLKOUT, everything else as-is */
+		/* Clear PWROFF, Set CLKOUT, everything else as-is */
 		reg = snd_soc_read(codec, WM8731_PWR) & 0xff7f;
-		snd_soc_write(codec, WM8731_PWR, reg | 0x0040);
+		snd_soc_write(codec, WM8731_PWR, reg | 0x40);
 		break;
 	case SND_SOC_BIAS_OFF:
+		pr_info("wm8731 bias off\n");
 		snd_soc_write(codec, WM8731_PWR, 0xffff);
 		regulator_bulk_disable(ARRAY_SIZE(wm8731->supplies),
 				       wm8731->supplies);
@@ -484,6 +537,7 @@ static const struct snd_soc_dai_ops wm8731_dai_ops = {
 	.hw_params	= wm8731_hw_params,
 	.digital_mute	= wm8731_mute,
 	.set_sysclk	= wm8731_set_dai_sysclk,
+	.set_clkdiv	= wm8731_set_dai_clkdiv,
 	.set_fmt	= wm8731_set_dai_fmt,
 };
 

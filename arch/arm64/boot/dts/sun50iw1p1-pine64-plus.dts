@@ -1813,9 +1813,10 @@
 			codec0: codec0@0x1a {
 				compatible = "wolfson,wm8731";
 				reg = <0x1a>;
-				va-supply = <&va_reg>;
-				vd-supply = <&vd_reg>;
-				vlc-supply = <&vlc_reg>;
+				AVDD-supply = <&va_reg>;
+				HPVDD-supply = <&va_reg>;
+				DCVDD-supply = <&va_reg>;
+				DBVDD-supply = <&va_reg>;
 				device_type = "codec";
 			};
 		};
