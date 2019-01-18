@@ -1810,9 +1810,9 @@
 			status = "okay";
 			pinctrl-0 = <0xa0>;
 
-			codec0: codec0@0x48 {
-				compatible = "cirrus,cs4270";
-				reg = <0x48>;
+			codec0: codec0@0x1a {
+				compatible = "wolfson,wm8731";
+				reg = <0x1a>;
 				va-supply = <&va_reg>;
 				vd-supply = <&vd_reg>;
 				vlc-supply = <&vlc_reg>;
@@ -2048,7 +2048,7 @@
 			compatible = "allwinner,sunxi-daudio0-machine";
 			sunxi,daudio0-controller = <0x4e>;
 			sunxi,audio-codec = <&codec0>;
-			sunxi,audio-dai-name = "cs4270-hifi";
+			sunxi,audio-dai-name = "wm8731-hifi";
 			status = "okay";
 			device_type = "snddaudio0";
 		};
