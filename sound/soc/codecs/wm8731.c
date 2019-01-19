@@ -328,6 +328,7 @@ static int wm8731_hw_params(struct snd_pcm_substream *substream,
 		iface |= 0x0004;
 		break;
 	case SNDRV_PCM_FORMAT_S24_LE:
+	case SNDRV_PCM_FORMAT_S32_LE:
 		iface |= 0x0008;
 		break;
 	}
@@ -531,7 +532,7 @@ static int wm8731_set_bias_level(struct snd_soc_codec *codec,
 #define WM8731_RATES SNDRV_PCM_RATE_8000_96000
 
 #define WM8731_FORMATS (SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S20_3LE |\
-	SNDRV_PCM_FMTBIT_S24_LE)
+	SNDRV_PCM_FMTBIT_S24_LE | SNDRV_PCM_FMTBIT_S32_LE)
 
 static const struct snd_soc_dai_ops wm8731_dai_ops = {
 	.hw_params	= wm8731_hw_params,
