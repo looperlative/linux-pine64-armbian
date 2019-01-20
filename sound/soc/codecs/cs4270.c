@@ -43,7 +43,8 @@
 			SNDRV_PCM_FMTBIT_S18_3LE | SNDRV_PCM_FMTBIT_S18_3BE | \
 			SNDRV_PCM_FMTBIT_S20_3LE | SNDRV_PCM_FMTBIT_S20_3BE | \
 			SNDRV_PCM_FMTBIT_S24_3LE | SNDRV_PCM_FMTBIT_S24_3BE | \
-			SNDRV_PCM_FMTBIT_S24_LE  | SNDRV_PCM_FMTBIT_S24_BE)
+			SNDRV_PCM_FMTBIT_S24_LE  | SNDRV_PCM_FMTBIT_S24_BE | \
+			SNDRV_PCM_FMTBIT_S32_LE  | SNDRV_PCM_FMTBIT_S32_BE)
 
 /* CS4270 registers addresses */
 #define CS4270_CHIPID	0x01	/* Chip ID */
@@ -325,6 +326,9 @@ static int cs4270_hw_params(struct snd_pcm_substream *substream,
 	rate = params_rate(params);	/* Sampling rate, in Hz */
 	ratio = cs4270->mclk / rate;	/* MCLK/LRCK ratio */
 
+	dev_info(codec->dev, "mclk %d, target rate %d, target ratio %d\n",
+		 cs4270->mclk, rate, ratio);
+
 	for (i = 0; i < NUM_MCLK_RATIOS; i++) {
 		if (cs4270_mode_ratios[i].ratio == ratio)
 			break;
@@ -337,6 +341,8 @@ static int cs4270_hw_params(struct snd_pcm_substream *substream,
 	}
 
 	/* Set the sample rate */
+
+	dev_info(codec->dev, "%s mode\n", cs4270->slave_mode ? "slave" : "master");
 
 	reg = snd_soc_read(codec, CS4270_MODE);
 	reg &= ~(CS4270_MODE_SPEED_MASK | CS4270_MODE_DIV_MASK);
@@ -360,9 +366,11 @@ static int cs4270_hw_params(struct snd_pcm_substream *substream,
 
 	switch (cs4270->mode) {
 	case SND_SOC_DAIFMT_I2S:
+	  	dev_info(codec->dev, "I2S format\n");
 		reg |= CS4270_FORMAT_DAC_I2S | CS4270_FORMAT_ADC_I2S;
 		break;
 	case SND_SOC_DAIFMT_LEFT_J:
+	  	dev_info(codec->dev, "left justified format\n");
 		reg |= CS4270_FORMAT_DAC_LJ | CS4270_FORMAT_ADC_LJ;
 		break;
 	default:
